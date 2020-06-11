@@ -4,24 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Coding Quiz Challenge</title>
+
+    <!-- Styling -->
+    <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
+    <!-- Header, staying across entire document -->
     <header>
         <a href="#">View Highscores</a>
         <p>Time: <span id="quiz-timer">0</span></p>
     </header>
 
+    <!-- Main, first section displayed with info to start the quiz -->
     <section id="main">
         <h1>Coding Quiz Challenge</h1>
         <p>Try to answer the following code-related questions within the time limit. Kepp in mind that incorrect answers
             will penalise your score/time by 5 seconds!</p>
-        <button>Start Quiz</button>
+        <!-- when clicked, start-button changes the visibility of the page to quiz section -->
+        <button id="start-button">Start Quiz</button>
     </section>
 
     <section id="quiz">
+        <h1 id="question"></h1>
+        <ul id="answers">
+
+        </ul>
+
+
     </section>
+
+    <!-- Script -->
+    <script src="script.js"></script>
 </body>
 
 </html>
