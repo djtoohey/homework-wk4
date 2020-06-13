@@ -89,11 +89,14 @@ function generateQuiz() {
     for (let i = 0; i < answers.length; i++) {
         var li = document.createElement("li");
         var btn = document.createElement("button");
-        btn.innerText = (i + 1) + ". " + answers[i];
+        btn.innerText = answers[i];
 
         btn.addEventListener("click", function () {
             if (pageCounter < 5) {
                 var message = document.getElementById("correct");
+
+
+
                 if (event.target.innerText === correctAnswer) {
                     generateQuiz();
                     message.textContent = "Correct!";
@@ -146,6 +149,8 @@ function gameOver() {
 
     var submitBtn = document.getElementById("form");
 
+    timeText = document.getElementById("time");
+    timeText.textContent = timerTime;
 
     submitBtn.addEventListener("submit", submitInitials);
 
@@ -162,7 +167,7 @@ function submitInitials(event) {
     var initials = initialsInput.value;
     event.preventDefault();
 
-    highscoreDisplay();
+
 
 
 
@@ -179,20 +184,7 @@ function submitInitials(event) {
     localStorage.setItem("highscores", JSON.stringify(highscores));
 
 
-
-    var highscoreList = document.getElementById("highscores-list");
-
-
-    var sortedPlayers = highscores.sort(function (a, b) {
-        return b.score - a.score
-    });
-    console.log(sortedPlayers);
-    for (let i = 0; i < sortedPlayers.length; i++) {
-        var scoreItem = document.createElement("li");
-        scoreItem.textContent = sortedPlayers[i].name + " - " + sortedPlayers[i].score;
-        highscoreList.appendChild(scoreItem);
-    }
-
+    highscoreDisplay();
 }
 
 
@@ -209,17 +201,21 @@ function highscoreDisplay() {
         location.reload();
     });
 
-    var highscoreList = document.getElementById("highscores-list");
+
     var clearBtn = document.getElementById("clear-highscores");
     clearBtn.addEventListener("click", function () {
         localStorage.clear();
         highscoreList.remove();
     });
 
+
+
+
+
+    var highscoreList = document.getElementById("highscores-list");
     var sortedPlayers = highscores.sort(function (a, b) {
         return b.score - a.score
     });
-
     console.log(sortedPlayers);
     for (let i = 0; i < sortedPlayers.length; i++) {
         var scoreItem = document.createElement("li");

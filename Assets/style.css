@@ -20,9 +20,13 @@ li{
 }
 
 #view-highscores{
-    float: left;
+    float: right;
+    
 }
-
+#correct{
+    float: left;
+    margin-top: 0px;
+}
 
 .default{
 
