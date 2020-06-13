@@ -14,12 +14,16 @@
 <body>
     <!-- Header, staying across entire document -->
     <section id="header">
-        <a id="view-highscores">View Highscores</a>
-        <p>Time: <span id="quiz-timer"></span></p>
+        <div id="view-highscores">
+            <a>View Highscores</a>
+        </div>
+        <div id="timer">
+            <p>Time: <span id="quiz-timer">30</span></p>
+        </div>
     </section>
 
     <!-- Main, first section displayed with info to start the quiz -->
-    <section id="main">
+    <section id="main" class="default">
         <h1>Coding Quiz Challenge</h1>
         <p>Try to answer the following code-related questions within the time limit. Kepp in mind that incorrect answers
             will penalise your score/time by 5 seconds!</p>
@@ -27,7 +31,7 @@
         <button id="start-button">Start Quiz</button>
     </section>
 
-    <section id="quiz">
+    <section id="quiz" class="default">
         <h1 id="question"></h1>
         <ul id="answers">
 
@@ -38,7 +42,7 @@
 
     </section>
 
-    <section id="gameover">
+    <section id="gameover" class="default">
         <h1>All done!</h1>
         <p>Your final score is <span id="time"> </span>.</p>
         <form id="form">
@@ -48,7 +52,7 @@
         </form>
     </section>
 
-    <section id="highscores">
+    <section id="highscores" class="default">
         <h1>Highscores</h1>
         <ol id="highscores-list"></ol>
         <button id="go-back">Go back</button>

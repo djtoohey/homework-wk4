@@ -1,0 +1,37 @@
+button{
+    color: white;
+    background-color: purple;
+    border-radius: 4px;
+}
+
+li{
+    list-style-type: none;
+    margin-bottom: 5px;
+}
+
+#timer{
+    float: right;
+    text-align: right;
+    
+}
+
+#timer p{
+    margin: 0px;
+}
+
+#view-highscores{
+    float: left;
+}
+
+
+.default{
+
+    text-align: center;
+    width: 400px;
+    margin-left: 35vw;
+    padding-top: 100px;
+}
+
+.default button{
+    text-align: left;
+}

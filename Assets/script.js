@@ -16,8 +16,6 @@ if (localStorage.getItem(("highscores"))) {
 
 }
 
-
-
 // obj with 5 questions, sets of answers and the correct answer
 const questions = {
     question1: "Commonly used data types DO NOT include:",
@@ -89,8 +87,9 @@ function generateQuiz() {
 
     // creates each button to answer the quiz
     for (let i = 0; i < answers.length; i++) {
+        var li = document.createElement("li");
         var btn = document.createElement("button");
-        btn.innerText = answers[i];
+        btn.innerText = (i + 1) + ". " + answers[i];
 
         btn.addEventListener("click", function () {
             if (pageCounter < 5) {
@@ -112,8 +111,10 @@ function generateQuiz() {
             }
         });
 
+        li.appendChild(btn);
         // add button to the page
-        answerDiv.appendChild(btn);
+        answerDiv.appendChild(li);
+
     }
 }
 function startTimer() {
