@@ -13,10 +13,10 @@
 
 <body>
     <!-- Header, staying across entire document -->
-    <header>
-        <a href="#">View Highscores</a>
-        <p>Time: <span id="quiz-timer">0</span></p>
-    </header>
+    <section id="header">
+        <a id="view-highscores">View Highscores</a>
+        <p>Time: <span id="quiz-timer"></span></p>
+    </section>
 
     <!-- Main, first section displayed with info to start the quiz -->
     <section id="main">
@@ -32,8 +32,27 @@
         <ul id="answers">
 
         </ul>
+        <hr>
+        <p id="correct"></p>
 
 
+    </section>
+
+    <section id="gameover">
+        <h1>All done!</h1>
+        <p>Your final score is <span id="time"> </span>.</p>
+        <form id="form">
+            <label for="initials">Initials:</label>
+            <input type="text" id="initials-input" name="initials" autofocus minlength="2" maxlength="2">
+            <button type="submit">Submit form</button>
+        </form>
+    </section>
+
+    <section id="highscores">
+        <h1>Highscores</h1>
+        <ol id="highscores-list"></ol>
+        <button id="go-back">Go back</button>
+        <button id="clear-highscores">Clear Highscores</button>
     </section>
 
     <!-- Script -->

@@ -1,13 +1,22 @@
-// TO DO, TIMER, GAME OVER(diffent section game-over?) 
-// AND HIGHSCORES(might be on another html page, might just have it as a section like the rest of it [highscores?] - localstorage)
-// little text at the bottom of the page saying correct and wrong
-
-var startBtn = document.getElementById("start-button");
-
 var mainSection = document.getElementById("main");
 var quizSection = document.getElementById("quiz");
+var gameoverSection = document.getElementById("gameover");
+var highscoreSection = document.getElementById("highscores");
 
 var pageCounter = 0;
+
+var timerTime = 30;
+var timer;
+
+var viewHighscores = document.getElementById("view-highscores");
+var highscores = [];
+if (localStorage.getItem(("highscores"))) {
+    highscores = localStorage.getItem(("highscores"))
+    highscores = JSON.parse(highscores);
+
+}
+
+
 
 // obj with 5 questions, sets of answers and the correct answer
 const questions = {
@@ -37,13 +46,21 @@ const questions = {
 function initialise() {
     mainSection.style.display = "block";
     quizSection.style.display = "none";
+    gameoverSection.style.display = "none";
+    highscoreSection.style.display = "none";
+
+    var startBtn = document.getElementById("start-button");
+
+    viewHighscores.addEventListener("click", highscoreDisplay)
 
     // starts the quiz from the main page
     startBtn.addEventListener("click", function () {
         mainSection.style.display = "none";
         quizSection.style.display = "block";
         // start timer
+
         generateQuiz();
+        startTimer();
     });
 }
 
@@ -52,6 +69,7 @@ function initialise() {
 function generateQuiz() {
     // sets which page to display
     pageCounter++
+
 
     // sets the question h1 to the question number string
     var questionDiv = document.getElementById("question");
@@ -73,23 +91,24 @@ function generateQuiz() {
     for (let i = 0; i < answers.length; i++) {
         var btn = document.createElement("button");
         btn.innerText = answers[i];
-        // btn.setAttribute("data-answer", answers[i]);
 
         btn.addEventListener("click", function () {
-            // if pageCounter is not => 5;
-            if (event.target.innerText === correctAnswer) {
-                alert("woot");
+            if (pageCounter < 5) {
+                var message = document.getElementById("correct");
+                if (event.target.innerText === correctAnswer) {
+                    generateQuiz();
+                    message.textContent = "Correct!";
+                }
+                else {
+                    generateQuiz();
 
-                generateQuiz();
-                // message at bottom "Correct!"
+                    timerTime -= 5;
+                    message.textContent = "Wrong!";
+                }
             }
             else {
-                alert("shit");
-
-                generateQuiz();
-
-                //take 5 sec from timer
-                // message at bottom "Wrong!"
+                gameOver();
+                console.log(pageCounter);
             }
         });
 
@@ -97,8 +116,115 @@ function generateQuiz() {
         answerDiv.appendChild(btn);
     }
 }
+function startTimer() {
+    // timer
+    var timerDiv = document.getElementById("quiz-timer");
+    timer = setInterval(function () {
+
+        timerTime--;
+        timerDiv.textContent = timerTime;
+
+        if (timerTime <= 0) {
+            // clearInterval(timer);
+            timerTime = 0;
+            timerDiv.textContent = timerTime;
+            gameOver(timer);
+        }
+    }, 1000);
+}
 
 
 
+function gameOver() {
+    if (pageCounter === 5) {
+        window.clearInterval(timer);
+    }
+    quizSection.style.display = "none";
+    gameoverSection.style.display = "block";
+
+
+    var submitBtn = document.getElementById("form");
+
+
+    submitBtn.addEventListener("submit", submitInitials);
+
+
+
+    // highscores
+    // localStorage.setItem("user", JSON.stringify(user));
+    // var lastUser = JSON.parse(localStorage.getItem("user"));
+}
+
+function submitInitials(event) {
+
+    var initialsInput = document.getElementById("initials-input");
+    var initials = initialsInput.value;
+    event.preventDefault();
+
+    highscoreDisplay();
+
+
+
+    var newHighscore = {
+        name: initials,
+        score: timerTime
+    };
+    if (newHighscore.name === "") {
+        newHighscore.name = "??";
+    }
+    highscores.push(newHighscore);
+
+    console.log(newHighscore);
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+
+
+
+    var highscoreList = document.getElementById("highscores-list");
+
+
+    var sortedPlayers = highscores.sort(function (a, b) {
+        return b.score - a.score
+    });
+    console.log(sortedPlayers);
+    for (let i = 0; i < sortedPlayers.length; i++) {
+        var scoreItem = document.createElement("li");
+        scoreItem.textContent = sortedPlayers[i].name + " - " + sortedPlayers[i].score;
+        highscoreList.appendChild(scoreItem);
+    }
+
+}
+
+
+function highscoreDisplay() {
+    var header = document.getElementById("header");
+    header.style.display = "none";
+
+    mainSection.style.display = "none";
+    highscoreSection.style.display = "block";
+    gameoverSection.style.display = "none";
+
+    var backBtn = document.getElementById("go-back");
+    backBtn.addEventListener("click", function () {
+        location.reload();
+    });
+
+    var highscoreList = document.getElementById("highscores-list");
+    var clearBtn = document.getElementById("clear-highscores");
+    clearBtn.addEventListener("click", function () {
+        localStorage.clear();
+        highscoreList.remove();
+    });
+
+    var sortedPlayers = highscores.sort(function (a, b) {
+        return b.score - a.score
+    });
+
+    console.log(sortedPlayers);
+    for (let i = 0; i < sortedPlayers.length; i++) {
+        var scoreItem = document.createElement("li");
+        scoreItem.textContent = sortedPlayers[i].name + " - " + sortedPlayers[i].score;
+        highscoreList.appendChild(scoreItem);
+    }
+}
 // calls page to start
 initialise();
