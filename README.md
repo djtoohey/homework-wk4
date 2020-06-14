@@ -17,7 +17,8 @@ Making quiz:
 Displaying quiz:
 ```
     looped through the quiz object to push to screen 
-    made the right question appear with the right answer and then was able to seperate all of them to have their own screen
+    made the right question appear with the right answer and then was able to 
+        seperate all of them to have their own screen
 ```
 
 Timer:
