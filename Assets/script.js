@@ -1,22 +1,31 @@
+// declaring all sections as global
 var mainSection = document.getElementById("main");
 var quizSection = document.getElementById("quiz");
 var gameoverSection = document.getElementById("gameover");
 var highscoreSection = document.getElementById("highscores");
 
+// setting the quiz timer text
+var timerDiv = document.getElementById("quiz-timer");
+
+// declaring page counter as global
 var pageCounter = 0;
 
+// declaring timer related vars as global
 var timerTime = 30;
 var timer;
 
-var viewHighscores = document.getElementById("view-highscores");
+// setting highscores to an array
 var highscores = [];
+// check if there is an item highscores in localStorage
 if (localStorage.getItem(("highscores"))) {
+    // then assign it to highscores
     highscores = localStorage.getItem(("highscores"))
+    // and parse from JSON
     highscores = JSON.parse(highscores);
 
 }
 
-// obj with 5 questions, sets of answers and the correct answer
+// obj with 5; questions, sets of answers and correct answer
 const questions = {
     question1: "Commonly used data types DO NOT include:",
     answers1: ["strings", "booleans", "alerts", "numbers"],
@@ -42,24 +51,30 @@ const questions = {
 
 // sets the initial properties of the page
 function initialise() {
+    // display only the main section
     mainSection.style.display = "block";
     quizSection.style.display = "none";
     gameoverSection.style.display = "none";
     highscoreSection.style.display = "none";
 
+    // declaring the start btn
     var startBtn = document.getElementById("start-button");
-
-    viewHighscores.addEventListener("click", highscoreDisplay)
-
     // starts the quiz from the main page
     startBtn.addEventListener("click", function () {
+        // change the current display to the quiz
         mainSection.style.display = "none";
         quizSection.style.display = "block";
-        // start timer
 
+        // generate the quiz and start the timer
         generateQuiz();
         startTimer();
     });
+
+    // declaring view highscores text
+    var viewHighscores = document.getElementById("view-highscores");
+    // addeventlistener for whenever the text is clicked to run highscoreDisplay 
+    viewHighscores.addEventListener("click", highscoreDisplay)
+
 }
 
 
@@ -87,141 +102,164 @@ function generateQuiz() {
 
     // creates each button to answer the quiz
     for (let i = 0; i < answers.length; i++) {
+        // creating the li and button element
         var li = document.createElement("li");
         var btn = document.createElement("button");
+
+        // setting inner text to one of the answers
         btn.innerText = answers[i];
 
+        // when btn is clicked check if the page count is less than 5,
         btn.addEventListener("click", function () {
             if (pageCounter < 5) {
+                // setting the display message
                 var message = document.getElementById("correct");
 
-
-
+                // then check if the btn clicked was the right answer
                 if (event.target.innerText === correctAnswer) {
-                    generateQuiz();
+                    // if so, then display correct
                     message.textContent = "Correct!";
                 }
                 else {
-                    generateQuiz();
-
-                    timerTime -= 5;
+                    // otherwise, display wrong and take 5 from the time
                     message.textContent = "Wrong!";
+                    timerTime -= 5;
                 }
+                // generate the new question
+                generateQuiz();
             }
+            // if the page counter is more than 5, there are no more questions, and it must end
             else {
                 gameOver();
-                console.log(pageCounter);
             }
         });
 
+        // add the btn to the list item
         li.appendChild(btn);
-        // add button to the page
+        // add list item to the page
         answerDiv.appendChild(li);
 
     }
 }
-function startTimer() {
-    // timer
-    var timerDiv = document.getElementById("quiz-timer");
-    timer = setInterval(function () {
 
+// starts the timer that will be used to score the user
+function startTimer() {
+
+    // sets timer to a timer
+    timer = setInterval(function () {
+        // each second, the timerTime will reduce by 1
         timerTime--;
+        // and then display it to the screen
         timerDiv.textContent = timerTime;
 
+        // once timer is equal or less than 0
         if (timerTime <= 0) {
-            // clearInterval(timer);
+            // set the timer to 0
             timerTime = 0;
-            timerDiv.textContent = timerTime;
-            gameOver(timer);
+
+
+            // run gameover
+            gameOver();
         }
+
+        // setting the time of the timer to 1000 milliseconds
     }, 1000);
 }
 
-
-
+// gameover function to change display and get initials
 function gameOver() {
-    if (pageCounter === 5) {
-        window.clearInterval(timer);
-    }
+    // stop the timer
+    window.clearInterval(timer);
+    // update the timer one last time
+    timerDiv.textContent = timerTime;
+
+    // display only the gameover section
+    mainSection.style.display = "none";
     quizSection.style.display = "none";
     gameoverSection.style.display = "block";
+    highscoreSection.style.display = "none";
 
-
+    // declaring the submit btn
     var submitBtn = document.getElementById("form");
 
+    // displays the final time "Your final score is " timerTime
     timeText = document.getElementById("time");
     timeText.textContent = timerTime;
 
+    // when the submitbtn is activated, run submitInitials
     submitBtn.addEventListener("submit", submitInitials);
-
-
-
-    // highscores
-    // localStorage.setItem("user", JSON.stringify(user));
-    // var lastUser = JSON.parse(localStorage.getItem("user"));
 }
 
+// add new score to highscores
 function submitInitials(event) {
-
-    var initialsInput = document.getElementById("initials-input");
-    var initials = initialsInput.value;
+    //prevents the page from reloading 
     event.preventDefault();
 
+    // declares where to get the initals from
+    var initialsInput = document.getElementById("initials-input");
+    // sets initals to the value of initialsInput
+    var initials = initialsInput.value;
 
-
-
-
+    // create an object to set the name to the initals and the score to the timerTime
     var newHighscore = {
         name: initials,
         score: timerTime
     };
+
+    // however, if the name is empty, set it to ??
     if (newHighscore.name === "") {
         newHighscore.name = "??";
     }
+    // add the new Obj to the highscores array
     highscores.push(newHighscore);
 
-    console.log(newHighscore);
+    // set the highscores localStorage to the array of objs with JSON
     localStorage.setItem("highscores", JSON.stringify(highscores));
 
-
+    // display the highscores
     highscoreDisplay();
 }
 
-
+// displays the highscores, if that be from the view highscores or from the submit btn
 function highscoreDisplay() {
+    // display only the highscore section
+    mainSection.style.display = "none";
+    quizSection.style.display = "none";
+    gameoverSection.style.display = "none";
+    highscoreSection.style.display = "block";
+
+    // remove the header (view highscores and timer text elements)
     var header = document.getElementById("header");
     header.style.display = "none";
 
-    mainSection.style.display = "none";
-    highscoreSection.style.display = "block";
-    gameoverSection.style.display = "none";
+    // get the html element where the highscores to be displayed
+    var highscoreList = document.getElementById("highscores-list");
+    // sort the scores from highest to lowest
+    var sortedScores = highscores.sort(function (a, b) {
+        return b.score - a.score
+    });
 
+    // loops through and adds each initial and score to the screen
+    for (let i = 0; i < sortedScores.length; i++) {
+        var scoreItem = document.createElement("li");
+        scoreItem.textContent = (i + 1) + ". " + sortedScores[i].name + " - " + sortedScores[i].score;
+        highscoreList.appendChild(scoreItem);
+    }
+
+
+    // sets the back btn to go back to the main page when clicked
     var backBtn = document.getElementById("go-back");
     backBtn.addEventListener("click", function () {
+        // by reloading the page
         location.reload();
     });
 
-
+    // set the clear btn, and clears out localstorage and removing all the list of highscores
     var clearBtn = document.getElementById("clear-highscores");
     clearBtn.addEventListener("click", function () {
         localStorage.clear();
         highscoreList.remove();
     });
-
-
-
-
-
-    var highscoreList = document.getElementById("highscores-list");
-    var sortedPlayers = highscores.sort(function (a, b) {
-        return b.score - a.score
-    });
-    console.log(sortedPlayers);
-    for (let i = 0; i < sortedPlayers.length; i++) {
-        var scoreItem = document.createElement("li");
-        scoreItem.textContent = sortedPlayers[i].name + " - " + sortedPlayers[i].score;
-        highscoreList.appendChild(scoreItem);
-    }
 }
 // calls page to start
 initialise();

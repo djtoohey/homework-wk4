@@ -1,34 +1,43 @@
+/* Styling for buttons, just have them all look the same */
 button{
-    color: white;
-    background-color: purple;
+    color: #ffffff;
+    background-color: #ff0000;
+    border-color: #000000;
     border-radius: 4px;
 }
 
+/* All List items - no styling just the text and bottom margin */
 li{
     list-style-type: none;
     margin-bottom: 5px;
 }
 
+/* moving timer to the right side of the screen */
 #timer{
     float: right;
     text-align: right;
     
 }
 
+/* removing the margins from the p tag */
 #timer p{
     margin: 0px;
 }
 
+/* holds the text to the left of the screen, seems 
+unnessacary but when not present the time moves down a line */
 #view-highscores{
-    float: right;
-    
-}
+     float: left;
+} 
+
+/* moves the text to the left side of the section and removes the margins */
 #correct{
     float: left;
     margin-top: 0px;
 }
 
-.default{
+/* the basic styling for all sections to keep it uniform */
+.content{
 
     text-align: center;
     width: 400px;
@@ -36,6 +45,13 @@ li{
     padding-top: 100px;
 }
 
-.default button{
+/* All content related to highscores aligns to the left of the section */
+#highscores {
     text-align: left;
+}
+
+/* setting color for the highscores list */
+#highscores ol{
+    background-color: rgba(255, 0, 0, 0.5);
+    
 }
