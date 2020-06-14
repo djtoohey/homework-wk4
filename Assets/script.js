@@ -107,7 +107,8 @@ function generateQuiz() {
         var btn = document.createElement("button");
 
         // setting inner text to one of the answers
-        btn.innerText = answers[i];
+        btn.innerText = (i + 1) + ". " + answers[i];
+        btn.setAttribute("option", answers[i])
 
         // when btn is clicked check if the page count is less than 5,
         btn.addEventListener("click", function () {
@@ -116,7 +117,7 @@ function generateQuiz() {
                 var message = document.getElementById("correct");
 
                 // then check if the btn clicked was the right answer
-                if (event.target.innerText === correctAnswer) {
+                if (event.target.getAttribute("option") === correctAnswer) {
                     // if so, then display correct
                     message.textContent = "Correct!";
                 }
