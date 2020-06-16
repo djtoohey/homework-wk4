@@ -50,4 +50,4 @@ Other:
     made README.md
 ```
 
-GitHub Pages: https://djtoohey.github.io/homework-wk4/Assets/index
+GitHub Pages: https://djtoohey.github.io/homework-wk4/index.html
