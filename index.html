@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Quiz Challenge</title>
+
+    <!-- Styling -->
+    <link rel="stylesheet" href="assets/style.css">
+
+</head>
+
+<body>
+    <!-- Header, staying across entire document -->
+    <section id="header">
+        <div id="view-highscores">
+            <a>View Highscores</a>
+        </div>
+        <div id="timer">
+            <p>Time: <span id="quiz-timer">30</span></p>
+        </div>
+    </section>
+
+    <!-- Main, first section displayed with info to start the quiz -->
+    <section id="main" class="content">
+        <h1>Coding Quiz Challenge</h1>
+        <p>Try to answer the following code-related questions within the time limit. Kepp in mind that incorrect answers
+            will penalise your score/time by 5 seconds!</p>
+        <!-- when clicked, start-button changes the visibility of the page to quiz section -->
+        <button id="start-button">Start Quiz</button>
+    </section>
+
+    <!-- Quiz section, displayed when start-button is clicked -->
+    <section id="quiz" class="content">
+        <!-- Question will be generated using js in h1 -->
+        <h1 id="question"></h1>
+        <!-- answers will be pushed as li buttons to the list -->
+        <ul id="answers"></ul>
+        <!-- divider line -->
+        <hr>
+        <!-- text displaying if answer was correct -->
+        <p id="correct"></p>
+    </section>
+
+    <!-- Gameover section, displayed when timer reaches 0 or user completes quiz -->
+    <section id="gameover" class="content">
+        <h1>All done!</h1>
+        <!-- final score will be displayed through time span -->
+        <p>Your final score is <span id="time"> </span>.</p>
+        <!-- form to input the score to the highscores -->
+        <form id="form">
+            <label for="initials">Initials:</label>
+            <input type="text" id="initials-input" name="initials" autofocus minlength="2" maxlength="2">
+            <!-- when button clicked, will change display to highscores content -->
+            <button type="submit">Submit form</button>
+        </form>
+    </section>
+
+    <!-- Highscores section, displayed when view highscores or submit is clicked -->
+    <section id="highscores" class="content">
+        <h1>Highscores</h1>
+        <!-- list with all the highscores in localStorage -->
+        <ol id="highscores-list"></ol>
+        <!-- button to go back to the beginning -->
+        <button id="go-back">Go back</button>
+        <!-- button to clear all highscores -->
+        <button id="clear-highscores">Clear Highscores</button>
+    </section>
+
+    <!-- Script -->
+    <script src="assets/script.js"></script>
+</body>
+
+</html>
