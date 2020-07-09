@@ -28,6 +28,12 @@ li{
 unnessacary but when not present the time moves down a line */
 #view-highscores{
      float: left;
+     margin: 15px;
+} 
+
+/* add margin around timer */
+#timer{
+    margin: 15px;
 } 
 
 /* moves the text to the left side of the section and removes the margins */

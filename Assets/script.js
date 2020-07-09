@@ -158,7 +158,6 @@ function startTimer() {
             // set the timer to 0
             timerTime = 0;
 
-
             // run gameover
             gameOver();
         }

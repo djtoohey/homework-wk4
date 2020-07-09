@@ -50,4 +50,6 @@ Other:
     made README.md
 ```
 
+![code quiz complete](assets/finished.png)
+
 GitHub Pages: https://djtoohey.github.io/homework-wk4/index.html
